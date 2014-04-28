@@ -1,0 +1,3 @@
+title=pong
+author=K-yak
+orientation=landscape
