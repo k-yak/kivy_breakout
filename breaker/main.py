@@ -3,14 +3,12 @@ kivy.require('1.1.3')
 
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ReferenceListProperty,\
-    ObjectProperty
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
 
-
-class Pong(FloatLayout):
+class Breaker(FloatLayout):
     pass
 
 class PongPaddle(Widget):
@@ -71,22 +69,9 @@ class PongGame(Widget):
 
     def on_touch_move(self, touch):
         if touch.x < self.width / 3:
-            if ((touch.y + self.player1.height / 2) > self.height):
-                self.player1.center_y = self.height - (self.player1.height / 2)
-            else:
-                if ((touch.y - self.player1.height / 2) < 0):
-                    self.player1.center_y = self.player1.height / 2
-                else:
-                    self.player1.center_y = touch.y
-
+            self.player1.center_y = touch.y
         if touch.x > self.width - self.width / 3:
-            if ((touch.y + self.player2.height / 2) > self.height):
-                self.player2.center_y = self.height - (self.player2.height / 2)
-            else:
-                if ((touch.y - self.player2.height / 2) < 0):
-                    self.player2.center_y = self.player2.height / 2
-                else:
-                    self.player2.center_y = touch.y
+            self.player2.center_y = touch.y
 
 class PongApp(App):
     def build(self):
