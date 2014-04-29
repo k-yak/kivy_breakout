@@ -39,7 +39,7 @@ class PongBall(Widget):
     velocity = ReferenceListProperty(velocity_x, velocity_y)
 
     def move(self):
-        self.pos += Vector(*self.velocity)
+        self.pos = Vector(*self.velocity) + self.pos
 
 
 class PongGame(Widget):

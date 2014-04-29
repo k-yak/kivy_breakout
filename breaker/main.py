@@ -38,20 +38,47 @@ class BreakerBall(Widget):
         self.pos = Vector(*self.velocity) + self.pos
 
 
+class BreakerBrick(Widget):
+    def collide(self, game, ball):
+        if self.collide_widget(ball):
+            # Bounce
+            vx, vy = ball.velocity
+            offset = (ball.center_x - self.center_x) / (self.width / 10)
+            bounced = Vector(vx, -1 * vy)
+            ball.velocity = bounced.x + offset, bounced.y
+
+            # Remove brick
+            game.bricks.remove(self)
+            game.remove_widget(self)
+
 class BreakerGame(Widget):
     ball = ObjectProperty(None)
     player = ObjectProperty(None)
+    brick = ObjectProperty(None)
+    brick2 = ObjectProperty(None)
+    brick3 = ObjectProperty(None)
+    bricks = []
 
-    def serve_ball(self, vel = (0, 4)):
+    def ini_bricks(self):
+        self.bricks.append(self.brick)
+        self.bricks.append(self.brick2)
+        self.bricks.append(self.brick3)
+
+    def serve_ball(self, velocity=(0, 4)):
         self.ball.center_x = self.player.center_x
         self.ball.center_y = self.player.height + self.ball.height
-        self.ball.velocity = vel
+        self.ball.velocity = velocity
 
     def update(self, dt):
         self.ball.move()
 
         # Bounce of paddles
         self.player.bounce_ball(self.ball)
+
+        # Brick collision
+        for brickItem in self.bricks:
+            brickItem.collide(self, self.ball)
+
 
         # Bounce ball off top
         if self.ball.top > self.top:
@@ -79,6 +106,7 @@ class BreakerGame(Widget):
 class BreakerApp(App):
     def build(self):
         game = BreakerGame()
+        game.ini_bricks()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
         return game

@@ -3,7 +3,14 @@
     canvas:
         Ellipse:
             pos: self.pos
-            size: self.size          
+            size: self.size
+
+<BreakerBrick>
+    size: 150, 30
+    canvas:
+        Rectangle:
+            pos: self.pos
+            size: self.size
 
 <BreakerPaddle>:
     size: 200, 25
@@ -15,7 +22,10 @@
 <BreakerGame>:
     ball: breaker_ball
     player: breaker_player
-    
+    brick: breaker_brick_test
+    brick2: breaker_brick_test2
+    brick3: breaker_brick_test3
+
     BreakerBall:
         id: breaker_ball
         center: self.parent.center
@@ -24,4 +34,18 @@
         id: breaker_player
         center_x: root.center_x
         center_y: self.height
-        
+
+    BreakerBrick:
+        id: breaker_brick_test
+        center_x: root.center_x
+        center_y: root.height - 50
+
+    BreakerBrick:
+        id: breaker_brick_test2
+        center_x: 100
+        center_y: root.height - 50
+
+    BreakerBrick:
+        id: breaker_brick_test3
+        center_x: root.width - 100
+        center_y: root.height - 50
