@@ -1,39 +1,41 @@
 Kivy Breakout 
 =====================
 
-
-----------
-**News :**
+#### News
 
 - Creation of project base
 
-----------
-**Todo :**
+#### Todo
+
+- Python level builder (using xml)
+- Level loader
+- Particle brick explosion
 
 
-
-----------
-
-
-How Install it
+How to Install it
 ---------
-#### <i class="icon-file"></i> STEP 1 : 
-Install Kivy
+#### Step 1 - Install Kivy
 
 [Official How to][1]
 
 
-#### <i class="icon-file"></i> STEP 2 : Testing
-Install Kivy Launcher
+#### Step 2 - Install Android Kivy Launcher
+
 [Google play link][2]
 
 
   ----------
 
 
-How Develop it
+How to Develop it
 ---------
-#### <i class="icon-file"></i> Links :
+
+#### Level loading scheme
+
+![Level loading scheme](/breaker/doc/kivy-level-loader.png "Level loading scheme")
+
+#### Links
+
 [Base Project][3]
 
 
