@@ -24,9 +24,6 @@ How to Install it
 [Google play link][2]
 
 
-  ----------
-
-
 How to Develop it
 ---------
 

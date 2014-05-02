@@ -7,7 +7,7 @@ from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProper
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.uix.floatlayout import FloatLayout
-
+import particlesystem as kivyparticle
 
 class Breaker(FloatLayout):
     pass
@@ -39,6 +39,12 @@ class BreakerBall(Widget):
 
 
 class BreakerBrick(Widget):
+    def particle_explode(self, game):
+        particle = kivyparticle.ParticleSystem("particles/jellyfish.pex")
+        game.add_widget(particle)
+        particle.move(game.center_x, game.center_y)
+        particle.start()
+
     def collide(self, game, ball):
         if self.collide_widget(ball):
             # Bounce
@@ -46,6 +52,9 @@ class BreakerBrick(Widget):
             offset = (ball.center_x - self.center_x) / (self.width / 10)
             bounced = Vector(vx, -1 * vy)
             ball.velocity = bounced.x + offset, bounced.y
+
+            # Particle explode
+            self.particle_explode(game)
 
             # Remove brick
             game.bricks.remove(self)
