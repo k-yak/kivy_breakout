@@ -62,7 +62,14 @@ class BreakerBrick(Widget):
         self.particle.move(self.center_x, self.center_y)
         self.particle.emitter_x_variance = self.width / 2
         self.particle.start(1)
+
+        Clock.schedule_once(self.stop_particle_explode, 1 + self.particle.life_span + self.particle.life_span_variance)
         game.add_widget(self.particle)
+
+    def stop_particle_explode(self, dt):
+        self.particle.stop(clear=True)
+        self.game.remove_widget(self.particle)
+        self.game.remove_widget(self)
 
     def collide(self, game, ball):
         if self.collide_widget(ball):
@@ -77,7 +84,7 @@ class BreakerBrick(Widget):
 
             # Remove brick
             game.bricks.remove(self)
-            game.remove_widget(self)
+            self.opacity = 0
 
 
 class BreakerGame(Widget):
