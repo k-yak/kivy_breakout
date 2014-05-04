@@ -3,14 +3,28 @@ kivy.require('1.1.3')
 
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
+from kivy.logger import Logger
 from kivy.uix.floatlayout import FloatLayout
+
 import particlesystem as kivyparticle
+
 
 class Breaker(FloatLayout):
     pass
+
+
+class DebugPanel(Widget):
+    fps = StringProperty(None)
+
+    def __init__(self, **kwargs):
+        super(DebugPanel, self).__init__(**kwargs)
+        Clock.schedule_interval(self.update_fps, 0.5)
+
+    def update_fps(self, dt):
+        self.fps = str(int(Clock.get_fps()))
 
 
 class BreakerPaddle(Widget):
@@ -39,11 +53,16 @@ class BreakerBall(Widget):
 
 
 class BreakerBrick(Widget):
+    particle = None
+    game = None
+
     def particle_explode(self, game):
-        particle = kivyparticle.ParticleSystem("particles/jellyfish.pex")
-        game.add_widget(particle)
-        particle.move(game.center_x, game.center_y)
-        particle.start()
+        self.game = game
+        self.particle = kivyparticle.ParticleSystem("particles/brick_explode.pex")
+        self.particle.move(self.center_x, self.center_y)
+        self.particle.emitter_x_variance = self.width / 2
+        self.particle.start(1)
+        game.add_widget(self.particle)
 
     def collide(self, game, ball):
         if self.collide_widget(ball):
@@ -59,6 +78,7 @@ class BreakerBrick(Widget):
             # Remove brick
             game.bricks.remove(self)
             game.remove_widget(self)
+
 
 class BreakerGame(Widget):
     ball = ObjectProperty(None)
@@ -118,6 +138,7 @@ class BreakerApp(App):
         game.ini_bricks()
         game.serve_ball()
         Clock.schedule_interval(game.update, 1.0 / 60.0)
+
         return game
 
 if __name__ in ('__main__', '__android__'):

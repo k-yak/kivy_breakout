@@ -19,6 +19,14 @@
             pos: self.pos
             size: self.size
 
+<DebugPanel>:
+    fps: root.fps
+    Label:
+        pos: root.pos
+        size: 15, 15
+        font_size: 15
+        text: 'FPS: ' + root.fps if root.fps != None else 'FPS:'
+
 <BreakerGame>:
     ball: breaker_ball
     player: breaker_player
@@ -49,3 +57,8 @@
         id: breaker_brick_test3
         center_x: root.width - 100
         center_y: root.height - 50
+
+    DebugPanel:
+        id: debug_fps
+        x: 25
+        y: root.height - 20
