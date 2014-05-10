@@ -21,11 +21,28 @@
 
 <DebugPanel>:
     fps: root.fps
+    windowWidth: root.windowWidth
+    windowHeight: root.windowHeight
+
     Label:
         pos: root.pos
         size: 15, 15
         font_size: 15
         text: 'FPS: ' + root.fps if root.fps != None else 'FPS:'
+
+    Label:
+        x: root.x + 100
+        y: root.y
+        size: 15, 15
+        font_size: 15
+        text: 'Height: ' + root.windowHeight if root.windowHeight != None else 'Height:'
+
+    Label:
+        x: root.x + 200
+        y: root.y
+        size: 15, 15
+        font_size: 15
+        text: 'Width: ' + root.windowWidth if root.windowWidth != None else 'Width:'
 
 <BreakerGame>:
     ball: breaker_ball

@@ -3,11 +3,12 @@ kivy.require('1.1.3')
 
 from kivy.app import App
 from kivy.uix.widget import Widget
-from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty
+from kivy.properties import NumericProperty, ReferenceListProperty, ObjectProperty, StringProperty, ListProperty
 from kivy.vector import Vector
 from kivy.clock import Clock
 from kivy.logger import Logger
 from kivy.uix.floatlayout import FloatLayout
+from kivy.core.window import Window
 
 import particlesystem as kivyparticle
 
@@ -18,13 +19,17 @@ class Breaker(FloatLayout):
 
 class DebugPanel(Widget):
     fps = StringProperty(None)
+    windowHeight = StringProperty(None)
+    windowWidth = StringProperty(None)
 
     def __init__(self, **kwargs):
         super(DebugPanel, self).__init__(**kwargs)
-        Clock.schedule_interval(self.update_fps, 0.5)
+        Clock.schedule_interval(self.update_fps, 0.1)
 
     def update_fps(self, dt):
         self.fps = str(int(Clock.get_fps()))
+        self.windowWidth = str(Window.width)
+        self.windowHeight = str(Window.height)
 
 
 class BreakerPaddle(Widget):
@@ -53,8 +58,8 @@ class BreakerBall(Widget):
 
 
 class BreakerBrick(Widget):
-    particle = None
-    game = None
+    particle = ObjectProperty(None)
+    game = ObjectProperty(None)
 
     def particle_explode(self, game):
         self.game = game
@@ -93,7 +98,7 @@ class BreakerGame(Widget):
     brick = ObjectProperty(None)
     brick2 = ObjectProperty(None)
     brick3 = ObjectProperty(None)
-    bricks = []
+    bricks = ListProperty(None)
 
     def ini_bricks(self):
         self.bricks.append(self.brick)
